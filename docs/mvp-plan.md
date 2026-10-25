@@ -8,13 +8,13 @@ The first release contains 10 deterministic missions. Each mission should be ind
 
 ## Milestone 0 — Playable shell
 
-- [ ] Mobile-first game layout with mission briefing, terminal output, command input, and hint/debrief areas.
-- [ ] Terminal input supports Enter to submit and a visible submit control for touch devices.
-- [ ] Command history supports at least Up/Down navigation.
-- [ ] Output is scrollable and remains readable on narrow screens.
-- [ ] A reset action restores the mission's initial state.
-- [ ] Unknown or malformed commands produce helpful feedback and do not mutate state.
-- [ ] No player input is executed by the host operating system.
+- [x] Mobile-first game layout with mission briefing, terminal output, command input, and hint/debrief areas.
+- [x] Terminal input supports Enter to submit and a visible submit control for touch devices.
+- [x] Command history supports at least Up/Down navigation.
+- [x] Output is scrollable and remains readable on narrow screens.
+- [x] A reset action restores the mission's initial state.
+- [x] Unknown or malformed commands produce helpful feedback and do not mutate state.
+- [x] No player input is executed by the host operating system.
 
 ## Mission design
 
@@ -22,6 +22,8 @@ The first release contains 10 deterministic missions. Each mission should be ind
 
 #### GIT-01: The suspicious workspace
 **Story:** A teammate asks whether the login fix is ready to commit, but the repository may contain unrelated changes.
+
+**Status:** Implemented as the first playable vertical slice.
 
 - Initial state: On branch `main`; `login.py` and `debug.log` are modified; `test_output.txt` is untracked; nothing is staged.
 - Objective: Inspect the current repository state before making changes.
@@ -32,11 +34,14 @@ The first release contains 10 deterministic missions. Each mission should be ind
 #### GIT-02: Stage only the fix
 **Story:** The login fix is ready, but debug output must not be included.
 
+**Status:** Implemented as the second playable mission.
+
 - Initial state: Same repository changes as GIT-01; nothing staged.
 - Objective: Stage `login.py` only.
+- Supported commands: `git status`, `git add <file>`, `git add .`, `git restore --staged <file>`.
 - Intended command: `git add login.py`.
 - Completion condition: `login.py` is staged; `debug.log` and `test_output.txt` are not staged.
-- Learning point: Prefer targeted staging when a workspace contains unrelated changes.
+- Learning point: Prefer targeted staging when a workspace contains unrelated changes, and verify recoverable mistakes with status or `git restore --staged`.
 
 #### GIT-03: Leave a useful checkpoint
 **Story:** The intended fix is staged. The team needs a traceable checkpoint.
